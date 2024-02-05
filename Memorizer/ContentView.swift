@@ -26,7 +26,7 @@ struct CardView: View {
         .foregroundColor(Color.yellow)
       RoundedRectangle(cornerRadius: 12)
         .strokeBorder(lineWidth: 2)
-      Text("🙅🏼‍♂️🙅🏼‍♂️")
+      Text("🙅🏼‍♂️")
         .foregroundColor(Color.orange)
     }.foregroundColor(.red)
   }
