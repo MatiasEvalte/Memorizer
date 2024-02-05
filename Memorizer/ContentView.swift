@@ -10,13 +10,26 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+          CardView()
+          CardView()
+          CardView()
+          CardView()
         }
         .padding()
     }
+}
+
+struct CardView: View {
+  var body: some View {
+    ZStack {
+      RoundedRectangle(cornerRadius: 12)
+        .foregroundColor(Color.yellow)
+      RoundedRectangle(cornerRadius: 12)
+        .strokeBorder(lineWidth: 2)
+      Text("🙅🏼‍♂️")
+        .foregroundColor(Color.orange)
+    }.foregroundColor(.red)
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
