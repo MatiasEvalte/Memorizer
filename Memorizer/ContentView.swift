@@ -19,7 +19,10 @@ struct ContentView: View {
   
   var body: some View {
     VStack {
-      cards
+      ScrollView {
+        cards
+      }
+      Spacer()
       HStack {
         buttonAdd
         Spacer()
@@ -33,34 +36,32 @@ struct ContentView: View {
 
 extension ContentView {
   var cards: some View {
-    HStack {
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
       ForEach(0..<cardCount, id: \.self) { index in
         CardView(content: cardArray[index],
-                 isFaceUp: false)
-      }
+                 isFaceUp: true)
+      }.aspectRatio(2/3, contentMode: ContentMode.fit)
     }
   }
   
   var buttonAdd: some View {
     Button {
-      if cardCount < cardArray.count {
-        cardCount += 1
-      }
+      cardCount += 1
     } label: {
       Image(systemName: Constants.imageAdd)
     }.foregroundColor(Color.red)
       .imageScale(Image.Scale.large)
+      .disabled(cardCount == cardArray.count)
   }
   
   var buttonRemove: some View {
     Button {
-      if cardCount > Constants.minValue {
-        cardCount -= 1
-      }
+      cardCount -= 1
     } label: {
       Image(systemName: Constants.imageRemove)
     }.foregroundColor(Color.red)
       .imageScale(Image.Scale.large)
+      .disabled(cardCount == Constants.minValue)
   }
 }
 
@@ -71,19 +72,15 @@ struct CardView: View {
   var body: some View {
     ZStack {
       let rectangle: RoundedRectangle = RoundedRectangle(cornerRadius: 12)
-      if isFaceUp {
-        rectangle.foregroundColor(Color.yellow)
+      Group {
+        rectangle.fill(isFaceUp ? Color.red : Color.green)
         rectangle.strokeBorder(lineWidth: 2)
-        Text(content)
-          .foregroundColor(Color.orange)
-      } else {
-        rectangle.foregroundColor(Color.red)
-        rectangle.strokeBorder(lineWidth: 2)
+        Text(content).font(Font.largeTitle)
+          .opacity(isFaceUp ? 1 : 0)
       }
-    }.foregroundColor(.black)
-      .onTapGesture {
-        isFaceUp.toggle()
-      }
+    }.onTapGesture {
+      isFaceUp.toggle()
+    }
   }
 }
 
